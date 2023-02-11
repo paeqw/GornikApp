@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 function Login({ navigation }) {
-    const [email, setEmail] = useState('');
+    const [oddzial, setOddzial] = useState('');
     const [password, setPassword] = useState('');
 
     return (
@@ -17,11 +17,11 @@ function Login({ navigation }) {
             <TextInput
                 style={styles.input}
                 placeholder="Oddział"
-                placeholderTextColor="#fff"
+                placeholderTextColor="#eee"
                 underlineColorAndroid="transparent"
                 returnKeyType="next"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
+                onChangeText={(text) => setOddzial(text)}
+                value={oddzial}
                 blurOnSubmit={false}
                 autoCorrect={false}
                 autoCapitalize="none"
@@ -29,7 +29,7 @@ function Login({ navigation }) {
             <TextInput
                 style={styles.input}
                 placeholder="Hasło"
-                placeholderTextColor="#fff"
+                placeholderTextColor="#eee"
                 underlineColorAndroid="transparent"
                 returnKeyType="next"
                 onChangeText={(text) => setPassword(text)}
@@ -40,15 +40,17 @@ function Login({ navigation }) {
             />
 
             <TouchableOpacity style={styles.buttonContainer}>
-                <Text onPress={() => navigation.navigate('Home')} style={styles.buttonText}>Zaloguj</Text>
+                <Text onPress={() => navigation.navigate('Plan', { oddzial })} style={styles.buttonText}>Zaloguj</Text>
+
             </TouchableOpacity>
         </View>
+
     );
 }
 const styles = {
     container: {
         flex: 1,
-        backgroundColor: '#34495e',
+        backgroundColor: '#252525',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
@@ -62,7 +64,7 @@ const styles = {
         height: 50,
         fontSize: 18,
         width: '80%',
-        backgroundColor: 'rgba(50,50,50,0.2)',
+        backgroundColor: '#717171',
         marginBottom: 20,
         color: '#fff',
         paddingHorizontal: 20,
