@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, FlatList, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 const PolishDays = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek"];
 const ClassNames = ["1a", "1b", "1c", "2a", "2b", "3a", "3b", "4a", "4b", "1at", "1bt", "1ct", "1dt", "1et", "1ft", "2at", "2bt", "2ct", "2dt", "3at", "3bt", "3ct", "3dt", "3et", "4at", "4bt", "4ct", "4dt", "4atg", "4btg", "4ctg", "4dtg", "1ab", "2ab", "3ab"];
 
+
 const Plan = (props) => {
     useEffect(() => {
         fetchData(selectedDay, selectedClass)
+        const date = new Date();
+        const day = date.getDay();
+        setToday(day);
     }, []);
     const { route } = props;
+    const [today, setToday] = useState(null);
     const oddzial = route.params?.oddzial || ClassNames[0];
     const [selectedDay, setSelectedDay] = useState(PolishDays[0]);
     const [selectedClass, setSelectedClass] = useState(oddzial);
@@ -20,7 +25,7 @@ const Plan = (props) => {
             const response = await fetch("http://192.168.100.27:2137/column?table=" + className + "&name=" + day);
             const data = await response.json();
             setApiData(data);
-            console.log(data);
+            if (data.lenght != 0) console.log("jesjesjes")
         } catch (error) {
             console.error(error);
         }
@@ -38,15 +43,13 @@ const Plan = (props) => {
         "14:25-15:10",
         "15:15-16:00"
     ];
-
-    console.log(apiData);
     return (
         <View style={styles.container1}>
             <View style={styles.dropdownContainer}>
                 <Picker
                     selectedValue={selectedDay}
                     style={styles.dropdown}
-                    onValueChange={(itemValue) => { setSelectedDay(itemValue); fetchData(selectedDay, selectedClass) }}
+                    onValueChange={(itemValue) => { setSelectedDay(itemValue); fetchData(selectedDay, selectedClass); console.log("ąą") }}
                 >
                     {PolishDays.map((day) => (
                         <Picker.Item key={day} label={day} value={day} />
@@ -55,7 +58,7 @@ const Plan = (props) => {
                 <Picker
                     selectedValue={selectedClass}
                     style={styles.dropdown1}
-                    onValueChange={(itemValue) => { setSelectedClass(itemValue); fetchData(selectedDay, selectedClass) }}
+                    onValueChange={(itemValue) => { setSelectedClass(itemValue); fetchData(selectedDay, selectedClass); console.log("iii") }}
                 >
                     {ClassNames.map((className) => (
                         <Picker.Item key={className} label={className} value={className} />
@@ -78,10 +81,6 @@ const Plan = (props) => {
                     keyExtractor={(item, index) => index.toString()}
                 />
             </View>
-
-
-
-
         </View >
     );
 };
